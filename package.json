@@ -1,0 +1,31 @@
+{
+  "name": "frog-command",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "frog": "frog.js"
+  },
+  "scripts": {
+    "postinstall":"echo \"try : frog config\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/super-frog/frog-command.git"
+  },
+  "author": "lanhao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/super-frog/frog-command/issues"
+  },
+  "homepage": "https://github.com/super-frog/frog-command#readme",
+  "dependencies": {
+    "async": "^2.5.0",
+    "colors": "^1.1.2",
+    "path": "^0.12.7",
+    "readline-sync": "^1.4.7",
+    "request-agent": "^1.0.3",
+    "yargs": "^8.0.2"
+  }
+}

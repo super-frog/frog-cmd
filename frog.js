@@ -5,6 +5,7 @@
 const yargs = require('yargs');
 const colors = require('colors');
 const EOL = require('os').EOL;
+const configuration = require('./lib/configuration');
 
 let argv = yargs
   .help('h')
@@ -17,10 +18,18 @@ let argv = yargs
 let command = argv._[0];
 
 switch (command) {
+  case 'reset':
+    configuration.reset();
+    break;
   case 'config':
-    require('./lib/configuration')();
+    configuration.init();
     break;
   case 'init':
+    if(configuration.ready()){
+      require('./lib/init')();
+    }else{
+      configuration.init();
+    }
     break;
   case 'publish':
     break;

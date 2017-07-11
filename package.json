@@ -1,13 +1,13 @@
 {
   "name": "frog-command",
   "version": "1.0.0",
-  "description": "",
+  "description": "super-frog commands suits",
   "main": "index.js",
   "bin": {
     "frog": "frog.js"
   },
   "scripts": {
-    "postinstall":"echo \"try : frog config\" && exit 1",
+    "postinstall": "echo \"try : frog config\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +23,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "colors": "^1.1.2",
+    "frog-lib": "^1.0.1",
     "path": "^0.12.7",
     "readline-sync": "^1.4.7",
     "request-agent": "^1.0.3",

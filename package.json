@@ -7,7 +7,7 @@
     "frog": "frog.js"
   },
   "scripts": {
-    "postinstall": "echo \"try : frog config\" && exit 1",
+    "postinstall": "echo \"try : frog config\" && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "colors": "^1.1.2",
-    "frog-lib": "^1.0.1",
+    "frog-lib": "github:super-frog/frog-lib",
     "path": "^0.12.7",
     "readline-sync": "^1.4.7",
     "request-agent": "^1.0.3",

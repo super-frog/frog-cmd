@@ -1,0 +1,8 @@
+{
+  "type": "node",
+  "name": "frog-command",
+  "git": {
+    "remote": "https://github.com/super-frog/frog-command.git",
+    "local": "/Users/lanhao/src/frog/frog-command"
+  }
+}

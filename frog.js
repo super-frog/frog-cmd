@@ -35,6 +35,9 @@ switch (command) {
     break;
   case 'build':
     break;
+  case 'opt':
+    require('./lib/optimization').dependence();
+    break;
   default:
     console.log(`${EOL}Dont always dying to make a big news!${EOL}`.red);
     break;

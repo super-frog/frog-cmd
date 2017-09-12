@@ -4,19 +4,20 @@
 
 'use strict';
 
-const fs = require('fs');
+const fs = require("fs");
 const colors = require('colors');
 
 let optimization = {};
 
 optimization.dependence = () => {
 
-  let deps = require(process.cwd()+'/package.json').dependencies;
+  let deps = require(process.cwd()+'/package.json').dependencies || {};
   for (let k in deps) {
     deps[k] = 0;
   }
 
   let requires = getAllRequire(process.cwd());
+
   for (let k in requires) {
     if (deps[requires[k]] !== undefined) {
       deps[requires[k]]++;
@@ -39,13 +40,17 @@ const getAllRequire = (path) => {
 
   } else if (path.endsWith('js')) {
     let content = fs.readFileSync(path).toString();
-    let matches = content.match(/require\('(.*?)'\)/g);
+    let matches = content.match(/require\(['|"](.*?)['|"]\)/g);
     for (let k in matches) {
-      result.push(matches[k].replace(/require\(\'|\'\)/g, ''));
+      result.push(matches[k].replace(/require\([\'|"]|[\'|"]\)/g, ''));
+    }
+    let matchesImport = content.match(/import[\s+](.*?)[\s+]from[\s+](.*)/g);
+    for(let k in matchesImport){
+      let find = matchesImport[k].match(/from[\s+]['|"](.*?)['|"]/)
+      find && (result.push(find[1]));
     }
   }
   return result;
 };
 
 module.exports = optimization;
-

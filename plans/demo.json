@@ -1,0 +1,93 @@
+{
+  "apis": {
+    "api1": {
+      "name":"api1",
+      "desc": "a demo doc",
+      "group": "test",
+      "request": {
+        "method": "get",
+        "uri": "/demo/{id}",
+        "params": {
+          "id": {
+            "_type": "number",
+            "_assert":1,
+            "_required": "true"
+          }
+        },
+        "query": {
+          "page": {
+            "_type": "number",
+            "_default": "1",
+            "_from": "pageNum"
+          }
+        }
+      },
+      "response": {
+        "body": {
+          "code": {
+            "_type": "number",
+            "_assert": "200"
+          },
+          "data": {
+            "_type": "object",
+            "_schema":"object_demo"
+          },
+          "message": {
+            "_type": "string",
+            "_default":"run success"
+          }
+        }
+      }
+    },
+    "api2": {
+      "name": "api2",
+      "desc": "a demo doc",
+      "group": "test",
+      "request": {
+        "method": "get",
+        "uri": "/demo/{id}",
+        "params": {
+          "id": {
+            "_type": "number",
+            "_required": "true"
+          }
+        },
+        "query": {
+          "page": {
+            "_type": "number",
+            "_default": "1",
+            "_from": "pageNum"
+          }
+        }
+      },
+      "response": {
+        "body": {
+          "code": {
+            "_type": "number",
+            "_assert": "200"
+          },
+          "data": {
+            "_type": "object",
+            "_schema":"object_demo"
+          },
+          "message": {
+            "_type": "string",
+            "_default":"run success"
+          }
+        }
+      }
+    }
+  },
+  "host": "http://127.0.0.1:3001",
+  "schema":{
+    "object_demo":{
+      "int":1,
+      "float":1.1,
+      "string":"hello world",
+      "array":[1,2,3],
+      "object":{
+        "one":1
+      }
+    }
+  }
+}

@@ -26,7 +26,7 @@ switch (command) {
     break;
   case 'init':
     if(configuration.ready()){
-      require('./lib/init')();
+      require('./commands/init')();
     }else{
       configuration.init();
     }
@@ -36,9 +36,9 @@ switch (command) {
   case 'build':
     break;
   case 'opt':
-    require('./lib/optimization').dependence();
+    require('./commands/optimization').dependence();
     break;
   default:
-    console.log(`${EOL}Dont always dying to make a big news!${EOL}`.red);
+    console.log(`${EOL}Don't always dying to make a big news!${EOL}`.red);
     break;
 }

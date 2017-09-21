@@ -5,7 +5,9 @@
 const yargs = require('yargs');
 const colors = require('colors');
 const EOL = require('os').EOL;
-const configuration = require('./lib/configuration');
+
+const configuration = require('./commands/configuration');
+const project = require('./commands/project');
 
 let argv = yargs
   .help('h')
@@ -16,8 +18,19 @@ let argv = yargs
   .argv;
 
 let command = argv._[0];
+let subCommand = argv._[1];
 
 switch (command) {
+  case 'create':
+    let projectName = subCommand;
+    project.create(projectName);
+    break;
+  case 'build':
+    project.build();
+    break;
+  case 'touch':
+    project.touch();
+    break;
   case 'reset':
     configuration.reset();
     break;

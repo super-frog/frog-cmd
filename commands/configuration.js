@@ -14,11 +14,13 @@ let configuration = {};
 
 configuration.init = () => {
   let config = {};
-  config.server = readline.question('Set your frog Server:'+'default:http://127.0.0.1:3333'.gray, {defaultInput: 'http://127.0.0.1:3333'});
+  //todo frog-server config
+  //config.server = readline.question('Set your frog Server:' + 'default:http://127.0.0.1:3333'.gray, {defaultInput: 'http://127.0.0.1:3333'});
   if (!fs.existsSync(HOME + '/.frog')) {
     fs.mkdirSync(HOME + '/.frog');
   }
-  fs.writeFileSync(HOME+'/.frog/config', JSON.stringify(config, null, 2));
+  fs.writeFileSync(HOME + '/.frog/config.json', JSON.stringify(config, null, 2));
+  console.log('蚊香蛙使用了冲浪, 效果拔群.'.gray);
   console.log('Configuration Success!'.green);
 };
 

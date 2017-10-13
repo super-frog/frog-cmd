@@ -10,6 +10,9 @@ const shell = require('shelljs');
 const colors = require('colors');
 const EOL = require('os').EOL;
 const readline = require('readline-sync');
+const dotenvr = require('dotenvr');
+const xiaolanDB = require('xiaolan-db');
+const func = require('../lib/func');
 
 let project = {};
 
@@ -26,7 +29,7 @@ project.create = (name) => {
     let packageJson = require(path.resolve('./package.json'));
     packageJson.scripts = {};
     packageJson.scripts['build'] = `frog build && exit 0`;
-    packageJson.scripts['run'] = `frog build && node server.js`;
+    packageJson.scripts['dev'] = `frog build && node server.js`;
     packageJson.scripts['touch'] = `frog touch && exit 0`;
     fs.writeFileSync(`./package.json`, JSON.stringify(packageJson, null, 2));
     console.log('Done !'.green);
@@ -35,9 +38,10 @@ project.create = (name) => {
 
 };
 
-project.build = () => {
+project.build = async () => {
   let projectRoot = process.cwd();
   console.log('step 1: start gen Request Object:'.yellow);
+  await func.sleep(300);
   if (!fs.existsSync(`${projectRoot}/routes.js`)) {
     console.log(`Can not found router file in "${projectRoot}"`.red);
     process.exit(0);
@@ -53,7 +57,10 @@ project.build = () => {
     }
     xiaolanast.genClass(`${projectRoot}/handlers/${handlers[k]}.js`, `${projectRoot}/definitions`);
   }
+  console.log('done !'.green+EOL);
+
   console.log('step 2: start gen Error Object:'.yellow);
+  await func.sleep(200);
   if (!fs.existsSync(`${projectRoot}/errors`)) {
     fs.mkdirSync(`${projectRoot}/errors`);
   }
@@ -62,6 +69,30 @@ project.build = () => {
     process.exit(0);
   }
   xiaolanast.genError(`${projectRoot}/errors/Error.js`, `${projectRoot}/errors`);
+  console.log('done !'.green+EOL);
+
+  console.log('step 3: Database Migrate:'.yellow);
+  await func.sleep(400);
+  let localENV = projectRoot+'/.env';
+  process.env = Object.assign(process.env, dotenvr.load(localENV));
+  let migrate = new xiaolanDB.Migrate();
+  let models = fs.readdirSync(`${projectRoot}/models`);
+  for(let k in models){
+    if(models[k].endsWith('.gen.js')){
+      continue;
+    }
+    let table = require(`${projectRoot}/models/${models[k]}`);
+    xiaolanast.genModel(`${projectRoot}/models/${models[k]}`,`${projectRoot}/models`).toFile();
+    await migrate.execute(table);
+  }
+  console.log('done !'.green+EOL);
+
+  console.log('step 4: start gen jsoc.json :'.yellow);
+  await func.sleep(600);
+  xiaolanast.genJsoc(projectRoot);
+  console.log('done !'.green+EOL);
+  
+
 };
 
 project.touch = () => {
@@ -77,6 +108,8 @@ project.touch = () => {
     console.log('Cancel !'.yellow);
   }
 };
+
+
 
 function versionSelect(version) {
   let bits = version.split('.');

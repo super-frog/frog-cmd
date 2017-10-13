@@ -1,13 +1,12 @@
 {
-  "name": "frog",
-  "version": "1.0.0",
+  "name": "frog-cmd",
+  "version": "1.0.3",
   "description": "super-frog commands suits",
   "main": "index.js",
   "bin": {
     "frog": "frog.js"
   },
   "scripts": {
-    "postinstall": "echo \"try : frog config\" && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,14 +21,14 @@
   "homepage": "https://github.com/super-frog/frog-command#readme",
   "dependencies": {
     "colors": "^1.1.2",
-    "faker": "^4.1.0",
+    "dotenvr": "^0.1.7",
     "frog-lib": "github:super-frog/frog-lib",
     "path": "^0.12.7",
     "readline-sync": "^1.4.7",
-    "serve-static": "^1.12.4",
+    "request-agent": "^1.0.3",
     "shelljs": "^0.7.8",
-    "xiaolan": "^1.4.3",
-    "xiaolan-ast": "^1.1.3",
+    "xiaolan-ast": "^1.2.14",
+    "xiaolan-db": "^1.2.8",
     "yargs": "^8.0.2"
   }
 }

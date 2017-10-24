@@ -39,25 +39,40 @@ project.create = (name) => {
 };
 
 project.build = async () => {
+  console.log('step 0: Init'.yellow);
+  await func.sleep(200);
   let projectRoot = process.cwd();
+  if (!fs.existsSync(`${projectRoot}/definitions`)) {
+    fs.mkdirSync(`${projectRoot}/definitions`);
+  }
+  if (!fs.existsSync(`${projectRoot}/definitions/handlers`)) {
+    fs.mkdirSync(`${projectRoot}/definitions/handlers`);
+  }
+  if (!fs.existsSync(`${projectRoot}/definitions/errors`)) {
+    fs.mkdirSync(`${projectRoot}/definitions/errors`);
+  }
+  if (!fs.existsSync(`${projectRoot}/definitions/models`)) {
+    fs.mkdirSync(`${projectRoot}/definitions/models`);
+  }
+
   console.log('step 1: start gen Request Object:'.yellow);
   await func.sleep(300);
   if (!fs.existsSync(`${projectRoot}/routes.js`)) {
     console.log(`Can not found router file in "${projectRoot}"`.red);
     process.exit(0);
   }
-  if (!fs.existsSync(`${projectRoot}/definitions`)) {
-    fs.mkdirSync(`${projectRoot}/definitions`);
-  }
   let handlers = xiaolanast.findHandler(`${projectRoot}/routes.js`);
+
   for (let k in handlers) {
     if (!fs.existsSync(`${projectRoot}/handlers/${handlers[k]}.js`)) {
       console.log(`can not found handler [${handlers[k]}]`.red);
       process.exit(0);
     }
-    xiaolanast.genClass(`${projectRoot}/handlers/${handlers[k]}.js`, `${projectRoot}/definitions`);
+    clearGen(`${projectRoot}/definitions/handlers/${handlers[k]}/`);
+    xiaolanast.genClass(`${projectRoot}/handlers/${handlers[k]}.js`, `${projectRoot}/definitions/handlers/${handlers[k]}/`);
   }
   console.log('done !'.green+EOL);
+
 
   console.log('step 2: start gen Error Object:'.yellow);
   await func.sleep(200);
@@ -68,7 +83,8 @@ project.build = async () => {
     console.log(`Can not found Error file in "${projectRoot}/errors/"`.red);
     process.exit(0);
   }
-  xiaolanast.genError(`${projectRoot}/errors/Error.js`, `${projectRoot}/errors`);
+
+  xiaolanast.genError(`${projectRoot}/errors/Error.js`, `${projectRoot}/definitions/errors`);
   console.log('done !'.green+EOL);
 
   console.log('step 3: Database Migrate:'.yellow);
@@ -82,7 +98,8 @@ project.build = async () => {
       continue;
     }
     let table = require(`${projectRoot}/models/${models[k]}`);
-    xiaolanast.genModel(`${projectRoot}/models/${models[k]}`,`${projectRoot}/models`).toFile();
+
+    xiaolanast.genModel(`${projectRoot}/models/${models[k]}`,`${projectRoot}/definitions/models`).toFile();
     await migrate.execute(table);
   }
   console.log('done !'.green+EOL);
@@ -130,5 +147,15 @@ function versionSelect(version) {
   };
 }
 
-
+function clearGen(path) {
+  if (!fs.existsSync(path)) {
+    fs.mkdirSync(path);
+  }
+  let files = fs.readdirSync(path);
+  for(let k in files){
+    if(files[k].endsWith('.gen.js')){
+      fs.unlinkSync(`${path}/${files[k]}`);
+    }
+  }
+}
 module.exports = project;

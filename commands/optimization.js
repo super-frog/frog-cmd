@@ -42,7 +42,8 @@ const getAllRequire = (path) => {
     let content = fs.readFileSync(path).toString();
     let matches = content.match(/require\(['|"](.*?)['|"]\)/g);
     for (let k in matches) {
-      result.push(matches[k].replace(/require\([\'|"]|[\'|"]\)/g, ''));
+      let f = matches[k].replace(/require\([\'|"]|[\'|"]\)/g, '');
+      result.push(f.split('/')[0]);
     }
     let matchesImport = content.match(/import[\s+](.*?)[\s+]from[\s+](.*)/g);
     for(let k in matchesImport){

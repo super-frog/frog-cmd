@@ -1018,9 +1018,9 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-xiaolan-ast@^1.2.30:
-  version "1.2.30"
-  resolved "https://registry.yarnpkg.com/xiaolan-ast/-/xiaolan-ast-1.2.30.tgz#e39d2985baeb6d5585ad501858b85e7df262c324"
+xiaolan-ast@^1.2.31:
+  version "1.2.31"
+  resolved "https://registry.yarnpkg.com/xiaolan-ast/-/xiaolan-ast-1.2.31.tgz#134ab6bbdc25c384b1723277476156cd6fe4cd55"
   dependencies:
     colors "^1.1.2"
     esprima "^4.0.0"

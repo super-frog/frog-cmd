@@ -6,7 +6,7 @@
 const path = require('path');
 const yargs = require('yargs');
 
-const Jsoc = require('../lib/jsoc');
+const Jsoc = require('../lib/Jsoc');
 
 let jsoc = {};
 

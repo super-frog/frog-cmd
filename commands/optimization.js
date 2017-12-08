@@ -38,7 +38,7 @@ const getAllRequire = (path) => {
       result = result.concat(getAllRequire(path + '/' + x));
     });
 
-  } else if (path.endsWith('js')) {
+  } else if (path.endsWith('.js')) {
     let content = fs.readFileSync(path).toString();
     let matches = content.match(/require\(['|"](.*?)['|"]\)/g);
     for (let k in matches) {

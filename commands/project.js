@@ -108,7 +108,10 @@ project.build = async () => {
   await func.sleep(600);
   xiaolanast.genJsoc(projectRoot);
   console.log('done !'.green+EOL);
-  
+
+};
+
+project.testSuit = ()=>{
 
 };
 
@@ -125,8 +128,6 @@ project.touch = () => {
     console.log('Cancel !'.yellow);
   }
 };
-
-
 
 function versionSelect(version) {
   let bits = version.split('.');
@@ -158,4 +159,5 @@ function clearGen(path) {
     }
   }
 }
+
 module.exports = project;

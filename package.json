@@ -21,14 +21,14 @@
   "homepage": "https://github.com/super-frog/frog-command#readme",
   "dependencies": {
     "colors": "^1.1.2",
-    "dotenvr": "^0.1.9",
+    "dotenvr": "^0.1.10",
     "frog-lib": "github:super-frog/frog-lib",
     "path": "^0.12.7",
     "readline-sync": "^1.4.7",
     "request-agent": "^1.0.3",
     "shelljs": "^0.7.8",
-    "xiaolan-ast": "^1.2.31",
-    "xiaolan-db": "^1.2.9",
+    "xiaolan-ast": "^1.2.32",
+    "xiaolan-db": "^1.2.12",
     "yargs": "^8.0.2"
   }
 }

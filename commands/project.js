@@ -91,6 +91,7 @@ project.build = async () => {
   await func.sleep(400);
   let localENV = projectRoot+'/.env';
   process.env = Object.assign(process.env, dotenvr.load(localENV));
+
   let migrate = new xiaolanDB.Migrate();
   let models = fs.readdirSync(`${projectRoot}/models`);
   for(let k in models){

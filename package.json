@@ -1,6 +1,6 @@
 {
   "name": "frog-cmd",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "super-frog commands suits",
   "main": "index.js",
   "bin": {
@@ -27,7 +27,7 @@
     "readline-sync": "^1.4.7",
     "request-agent": "^1.0.3",
     "shelljs": "^0.7.8",
-    "xiaolan-ast": "^1.2.32",
+    "xiaolan-ast": "^1.2.38",
     "xiaolan-db": "^1.2.12",
     "yargs": "^8.0.2"
   }

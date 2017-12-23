@@ -180,10 +180,6 @@ dotenvr@^0.1.10:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/dotenvr/-/dotenvr-0.1.10.tgz#3ace1bb3ff79a7890254bedc213c65b2e396f7b0"
 
-dotenvr@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/dotenvr/-/dotenvr-0.1.9.tgz#d454b6ea22e208144f483e4b11e66da2eaa3de96"
-
 double-ended-queue@^2.1.0-0:
   version "2.1.0-0"
   resolved "https://registry.yarnpkg.com/double-ended-queue/-/double-ended-queue-2.1.0-0.tgz#103d3527fd31528f40188130c841efdd78264e5c"
@@ -1022,14 +1018,14 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-xiaolan-ast@^1.2.32:
-  version "1.2.32"
-  resolved "https://registry.yarnpkg.com/xiaolan-ast/-/xiaolan-ast-1.2.32.tgz#875371d5673a2a2be95a06ca844f357fec5393f2"
+xiaolan-ast@^1.2.38:
+  version "1.2.38"
+  resolved "https://registry.yarnpkg.com/xiaolan-ast/-/xiaolan-ast-1.2.38.tgz#5350a280539c7657bdb5f869888488b89306179d"
   dependencies:
     colors "^1.1.2"
     esprima "^4.0.0"
     frog-lib "^1.0.3"
-    xiaolan "^1.5.17"
+    xiaolan "^1.5.21"
     xiaolan-db "^1.2.9"
     xiaolan-router "^1.0.1"
 
@@ -1049,14 +1045,14 @@ xiaolan-router@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/xiaolan-router/-/xiaolan-router-1.0.1.tgz#e81c4493aa15af0637177480cf91735df9948089"
 
-xiaolan@^1.5.17:
-  version "1.5.17"
-  resolved "https://registry.yarnpkg.com/xiaolan/-/xiaolan-1.5.17.tgz#e23fcac46df4b231169a9cb8b86d154822956a0d"
+xiaolan@^1.5.21:
+  version "1.5.21"
+  resolved "https://registry.yarnpkg.com/xiaolan/-/xiaolan-1.5.21.tgz#25c6f2e4cf2093aa7a23313191ca3ae61a818baa"
   dependencies:
     async "^2.5.0"
     colors "^1.1.2"
     crypto "0.0.3"
-    dotenvr "^0.1.9"
+    dotenvr "^0.1.10"
     easymysql "^0.2.7"
     fy-mysql "^0.2.13"
     redis "^2.2.5"

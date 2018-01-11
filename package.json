@@ -1,6 +1,6 @@
 {
   "name": "frog-cmd",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "super-frog commands suits",
   "main": "index.js",
   "bin": {
@@ -22,7 +22,6 @@
   "dependencies": {
     "colors": "^1.1.2",
     "dotenvr": "^0.1.10",
-    "frog-lib": "github:super-frog/frog-lib",
     "path": "^0.12.7",
     "readline-sync": "^1.4.7",
     "request-agent": "^1.0.3",

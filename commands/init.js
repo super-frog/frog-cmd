@@ -4,7 +4,7 @@
 
 'use strict';
 
-const analysis = require('frog-lib').analysis;
+const analysis = require('../lib/analysis');
 const fs = require('fs');
 const colors = require('colors');
 const readline = require('readline-sync');
@@ -12,7 +12,7 @@ const readline = require('readline-sync');
 module.exports = () => {
   let frog = analysis();
   if(fs.existsSync(process.cwd() + '/frog.json')){
-    let cover = readline.keyInYN('Over Write ? '.red);
+    let cover = readline.keyInYN('Over Write(覆盖原文件) ? '.red);
     if(!cover){
       console.log('Quit. ^_^'.green);
       process.exit(-1);

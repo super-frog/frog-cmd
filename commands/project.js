@@ -23,8 +23,8 @@ project.create = (name) => {
     fs.mkdirSync(filePath);
   }
   process.chdir(name);
-
-  shell.exec(`npm init --yes && npm i xiaolan -S && ./node_modules/.bin/xiaolan`, {silent: true, async: false}, () => {
+  console.log('Waiting ...'.yellow + EOL);
+  shell.exec(`npm init --yes && npm i xiaolan -S --registry=https://registry.npm.taobao.org && ./node_modules/.bin/xiaolan`, {silent: true, async: false}, () => {
     console.log(`Init : ${path.resolve('./package.json')}${EOL}`);
     let packageJson = require(path.resolve('./package.json'));
     packageJson.scripts = {};

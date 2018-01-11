@@ -72,7 +72,11 @@ switch (command) {
 
   // 项目优化检查 frog opt
   case 'opt':
-    require('./commands/optimization').dependence();
+    if(subCommand===undefined){
+      require('./commands/optimization').dependence();
+    }else{
+      require('./commands/optimization').detail(subCommand);
+    }
     break;
   default:
     console.log(`${EOL}Don't always dying to make a big news!${EOL}`.red);

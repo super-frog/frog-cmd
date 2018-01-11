@@ -1,6 +1,6 @@
 {
   "name": "frog-cmd",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "super-frog commands suits",
   "main": "index.js",
   "bin": {

@@ -39,9 +39,13 @@ project.create = (name) => {
 };
 
 project.build = async () => {
+  let projectRoot = process.cwd();
+  if(!fs.existsSync(`${projectRoot}/xiaolan.locked`)){
+    console.log(`This is not created by Frog `.red);process.exit(0);
+  }
   console.log('step 0: Init'.yellow);
   await func.sleep(200);
-  let projectRoot = process.cwd();
+  
   if (!fs.existsSync(`${projectRoot}/definitions`)) {
     fs.mkdirSync(`${projectRoot}/definitions`);
   }

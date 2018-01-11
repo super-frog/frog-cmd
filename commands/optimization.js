@@ -18,7 +18,10 @@ optimization.detail = (moduleName)=>{
     process.exit(0);
   }
   let requires = getAllRequire(process.cwd());
-  console.log(`${moduleName} used detail:${EOL}`);process.exit(0);
+  console.log(`${moduleName} used detail:${EOL}`.yellow);
+  for(let k in requires[moduleName]){
+    console.log(requires[moduleName][k].green);
+  }
 };
 
 optimization.dependence = () => {

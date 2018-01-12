@@ -66,7 +66,7 @@ project.build = async () => {
     process.exit(0);
   }
   let handlers = xiaolanast.findHandler(`${projectRoot}/routes.js`);
-
+  forceDelete(`${projectRoot}/definitions/handlers/*`);
   for (let k in handlers) {
     if (!fs.existsSync(`${projectRoot}/handlers/${handlers[k]}.js`)) {
       console.log(`can not found handler [${handlers[k]}]`.red);
@@ -102,6 +102,7 @@ project.build = async () => {
   if(models.length>0){
     migrate = new xiaolanDB.Migrate();
   }
+  forceDelete(`${projectRoot}/definitions/models/*`);
   for(let k in models){
     if(models[k].endsWith('.gen.js')){
       continue;
@@ -169,4 +170,7 @@ function clearGen(path) {
   }
 }
 
+function forceDelete(path){
+  shell.exec(`rm -fr ${path}`);
+}
 module.exports = project;

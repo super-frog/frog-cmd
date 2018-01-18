@@ -26,7 +26,8 @@
     "readline-sync": "^1.4.7",
     "request-agent": "^1.0.3",
     "shelljs": "^0.7.8",
-    "xiaolan-ast": "^1.3.28",
+    "xiaolan": "^1.6.9",
+    "xiaolan-ast": "^1.3.33",
     "xiaolan-db": "^1.2.12",
     "yargs": "^8.0.2"
   }

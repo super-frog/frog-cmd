@@ -13,6 +13,7 @@ const readline = require('readline-sync');
 const dotenvr = require('dotenvr');
 const xiaolanDB = require('xiaolan-db');
 const func = require('../lib/func');
+const counting = require('../lib/line-counting');
 
 let project = {};
 
@@ -119,6 +120,10 @@ project.build = async () => {
   xiaolanast.genJsoc(projectRoot);
   console.log('done !'.green+EOL);
 
+  
+  let allLines = counting(projectRoot);
+  let customerLines = counting(projectRoot,['definitions']);
+  console.log(`总代码行数: ${allLines.toString().blue}, 自动生成: ${(allLines-customerLines).toString().blue}, ${EOL}为你节省了: ${(Number.parseInt(100*(allLines-customerLines)/allLines) + '%').green} 工作量!`);process.exit(0);
 };
 
 project.testSuit = ()=>{

@@ -5,17 +5,17 @@ const xiaolanast = require('xiaolan-ast');
 
 const clientMaker = {};
 
-clientMaker.genClient = (projectName, specJsoc)=>{
+clientMaker.genClient = (projectName)=>{
   if(!fs.existsSync(`${process.cwd()}/clients`)){
     fs.mkdirSync(`${process.cwd()}/clients`);
   }
   let output = `${process.cwd()}/clients`;
-  
-  xiaolanast.genClient(projectName, output, specJsoc)
+  xiaolanast.genClient(projectName, output)
   .then((v)=>{
-    console.log(v);process.exit(0);
+    process.exit(0);
   }).catch((e)=>{
-    console.log(e);process.exit(0);
+    console.log(e);
+    process.exit(0);
   });
 };
 

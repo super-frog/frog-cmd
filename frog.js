@@ -80,8 +80,7 @@ switch (command) {
     break;
   // 自动生成服务的client
   case 'client':
-    let specJsoc = argv._[2] || null;
-    require('./commands/client').genClient(subCommand, specJsoc);
+    require('./commands/client').genClient(subCommand);
     break;
   default:
     console.log(`${EOL}Don't always dying to make a big news!${EOL}`.red);

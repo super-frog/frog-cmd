@@ -17,7 +17,7 @@ let argv = yargs
   .epilog('Power by Xiaolan 2017'.green)
   .argv;
 
-if(argv.help === true){
+if (argv.help === true) {
   require('./commands/help')();
   process.exit(0);
 }
@@ -72,11 +72,16 @@ switch (command) {
 
   // 项目优化检查 frog opt
   case 'opt':
-    if(subCommand===undefined){
+    if (subCommand === undefined) {
       require('./commands/optimization').dependence();
-    }else{
+    } else {
       require('./commands/optimization').detail(subCommand);
     }
+    break;
+  // 自动生成服务的client
+  case 'client':
+    let specJsoc = argv._[2] || null;
+    require('./commands/client').genClient(subCommand, specJsoc);
     break;
   default:
     console.log(`${EOL}Don't always dying to make a big news!${EOL}`.red);

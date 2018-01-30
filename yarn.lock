@@ -1022,13 +1022,14 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-xiaolan-ast@^1.3.35:
-  version "1.3.35"
-  resolved "https://registry.yarnpkg.com/xiaolan-ast/-/xiaolan-ast-1.3.35.tgz#3dc2100b97b0a9826314b4a20ec68a996c234e42"
+xiaolan-ast@^1.3.39:
+  version "1.3.39"
+  resolved "https://registry.yarnpkg.com/xiaolan-ast/-/xiaolan-ast-1.3.39.tgz#a20985dc1d084acb898f89d497b874a1be4f3105"
   dependencies:
     colors "^1.1.2"
     esprima "^4.0.0"
     frog-lib "^1.0.3"
+    request-agent "^1.0.3"
     xiaolan "^1.6.9"
     xiaolan-db "^1.2.9"
     xiaolan-router "^1.0.1"

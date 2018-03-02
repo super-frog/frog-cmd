@@ -120,6 +120,8 @@ project.build = async () => {
   xiaolanast.genJsoc(projectRoot);
   console.log('done !'.green+EOL);
 
+  //更新.env.example
+  syncEnv();
   
   let allLines = counting(projectRoot);
   let customerLines = counting(projectRoot,['definitions']);
@@ -143,6 +145,22 @@ project.touch = () => {
     console.log('Cancel !'.yellow);
   }
 };
+
+function syncEnv(){
+  if(!fs.existsSync(`${process.cwd()}/.env`)){
+    return ;
+  }
+  let env = fs.readFileSync(`${process.cwd()}/.env`).toString().split(EOL);
+  let envExample = [];
+  for(let k in env){
+    let kv = env[k].split('=');
+    if(kv[1] === undefined){
+      continue;
+    }
+    envExample.push(kv[0]+'='); 
+  }
+  fs.writeFileSync(`${process.cwd()}/.env.example`, envExample.join(EOL));
+}
 
 function versionSelect(version) {
   let bits = version.split('.');

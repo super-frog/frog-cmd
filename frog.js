@@ -38,8 +38,13 @@ switch (command) {
   // 生成代码 frog gen model {modelName}
   //frog gen route {xxx}
   case 'gen':
-    gen(argv);
-    break;ß
+    gen(argv).then((v) => {
+      process.exit(0);
+    }).catch((e) => {
+      console.log(e.message.red);
+      process.exit(-1);
+    });
+    break;
   // 编译项目 frog build
   case 'build':
     project.build().then((v) => {

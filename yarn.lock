@@ -1006,9 +1006,9 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-xiaolan-ast@^1.3.55:
-  version "1.3.55"
-  resolved "https://registry.npmjs.org/xiaolan-ast/-/xiaolan-ast-1.3.55.tgz#591c0257975e2c1c71ab92ea8ba9a29455cad7d2"
+xiaolan-ast@^1.3.59:
+  version "1.3.59"
+  resolved "https://registry.npmjs.org/xiaolan-ast/-/xiaolan-ast-1.3.59.tgz#9dac6a08a1203781696388eaf51160ef0165a643"
   dependencies:
     colors "^1.1.2"
     esprima "^4.0.0"
@@ -1024,9 +1024,9 @@ xiaolan-db@^1.2.13:
   dependencies:
     fy-mysql "^0.2.13"
 
-xiaolan-db@^1.2.15:
-  version "1.2.15"
-  resolved "https://registry.npmjs.org/xiaolan-db/-/xiaolan-db-1.2.15.tgz#f8534611b14c4e11e9635e6a354b6cce37ccc1db"
+xiaolan-db@^1.2.16:
+  version "1.2.16"
+  resolved "https://registry.npmjs.org/xiaolan-db/-/xiaolan-db-1.2.16.tgz#5d37d267a78eaa42d49c9af04772d8ec62ba8931"
   dependencies:
     fy-mysql "^0.2.13"
 

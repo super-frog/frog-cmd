@@ -29,16 +29,17 @@ if (argv.help === true) {
 }
 
 switch (command) {
-  // 生成代码 frog gen model {modelName}
-  //frog gen route {xxx}
-  case 'gen':
-    gen(argv);
-    break;
+
   // 创建项目 frog create {projectName}
   case 'create':
     let projectName = subCommand;
     project.create(projectName);
     break;
+  // 生成代码 frog gen model {modelName}
+  //frog gen route {xxx}
+  case 'gen':
+    gen(argv);
+    break;ß
   // 编译项目 frog build
   case 'build':
     project.build().then((v) => {
@@ -49,7 +50,7 @@ switch (command) {
       process.exit(-1);
     });
     break;
-  // 更新版本 frog touch
+  // 更新项目版本 frog touch
   case 'touch':
     project.touch();
     break;
@@ -85,7 +86,7 @@ switch (command) {
       require('./commands/optimization').detail(subCommand);
     }
     break;
-  // 自动生成服务的client
+  // 自动生成服务的client frog client {projectName}
   case 'client':
     require('./commands/client').genClient(subCommand);
     break;

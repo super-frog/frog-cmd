@@ -40,17 +40,6 @@ project.create = async (argv) => {
 
 };
 
-project.init = async (argv) => {
-  if (!fs.existsSync(`${process.cwd()}/.frog.json`)) {
-    let frog = {
-      name: path.basename(process.cwd()),
-      frogVersion: require(path.resolve(__dirname + '/../package.json')).version
-    };
-
-    fs.writeFileSync(`${process.cwd()}/.frog.json`, JSON.stringify(frog, null, 2));
-    console.log(`Done! File generated: ${process.cwd()}/.frog.json `.blue); process.exit(0);
-  }
-};
 
 project.build = async () => {
   let projectRoot = process.cwd();

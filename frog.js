@@ -9,6 +9,7 @@ const EOL = require('os').EOL;
 const configuration = require('./commands/configuration');
 const project = require('./commands/project');
 const jsoc = require('./commands/jsoc');
+const gen = require('./commands/gen');
 
 let argv = yargs
   .option('h', {
@@ -17,16 +18,22 @@ let argv = yargs
   .epilog('Power by Xiaolan 2017'.green)
   .argv;
 
-if (argv.help === true) {
-  require('./commands/help')();
-  process.exit(0);
-}
 
 let command = argv._[0];
 let subCommand = argv._[1];
 
 
+if (argv.help === true) {
+  require('./commands/help')(argv);
+  process.exit(0);
+}
+
 switch (command) {
+  // 生成代码 frog gen model {modelName}
+  //frog gen route {xxx}
+  case 'gen':
+    gen(argv);
+    break;
   // 创建项目 frog create {projectName}
   case 'create':
     let projectName = subCommand;

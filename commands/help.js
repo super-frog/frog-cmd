@@ -8,10 +8,14 @@ const path = require('path');
 const colors = require('colors');
 const EOL = require('os').EOL;
 
-module.exports = ()=>{
+module.exports = (argv)=>{
   let entrance = path.resolve('./frog.js');
   let helpers = xiaolanAst.genHelper(entrance);
-
+  if(argv._[0]){
+    helpers = {
+      [argv._[0]]: helpers[argv._[0]]
+    }
+  }
   for(let k in helpers){
     let help = helpers[k];
     printHelper(help);

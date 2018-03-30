@@ -61,7 +61,19 @@ function whatAreYouTalking(str) {
     }
   }
 }
+/**
+ * frig gen route get_**_by_**
+ * 根据具体的字段查询数据，
+ * 如果字段是唯一索引，返回单个
+ * 如果普通索引，返回列表
+ * 不是索引，不能生成
+ */
 
+/**
+ * frog gen route get_**_list
+ * 自动根据有索引的字段，生成读取列表的handler
+ * 字段支持数组传输， 使用 in 查询
+ */
 function getList(p) {
 
   let modelPath = `${process.cwd()}/models/${p[1]}.js`;

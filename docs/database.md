@@ -27,16 +27,16 @@
 	});
 
 	```
-其中
+	其中
 	
 	```
 	...Presets.opTime,
 	```
-等价于
+	等价于
 	
 	```
 	createTime: Field.name('create_time').bigint(true).index().comment('创建时间'),
-  updateTime: Field.name('update_time').bigint(true).index().comment('更新时间'),
+	updateTime: Field.name('update_time').bigint(true).index().comment('更新时间'),
 	```
 	
 	>这里`Presets`的实现利用了**结构**，不限于`frog`提供的预设值，你也可以自由地提取自己的预设值，只要符合编写要求即可。

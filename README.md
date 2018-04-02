@@ -1,10 +1,23 @@
-## 项目没完成, 先给几个实测案例看看 ,总的来说, 业务越多, 工作量节省越多,基本在80%左右
+### Frog - build your application fast and save your time +1s
+![](http://bluestest.oss-cn-shanghai.aliyuncs.com/u=2760800048,436059731&fm=26&gp=0.jpg)
 
-服务1, 接口:13个, 数据表:6张
-![](http://bluestest.oss-cn-shanghai.aliyuncs.com/hacking.png)
+###  Overview
 
-服务2, 接口:2个, 数据表:3张
-![](http://bluestest.oss-cn-shanghai.aliyuncs.com/jin-map-reduce.png)
+![](http://bluestest.oss-cn-shanghai.aliyuncs.com/frog.png)
 
-服务3, 接口:4个, 数据表:2张
-![](http://bluestest.oss-cn-shanghai.aliyuncs.com/lat-runner.png)
+- [Database 数据模型](./docs/database.md)
+	
+
+- [Protocol-less Handler 对调用协议无感知的业务逻辑](./docs/protocol-less-handler.md)
+
+- [Incoming Validation 输入校验]()
+
+- [Automatic Document 自动产出文档]()
+
+- [Automatic Remote Call Client 自动生成远程调用客户端代码]()
+
+- [Easy Definition of Error Type 更简单的定义/管理错误]()
+
+
+
+ 

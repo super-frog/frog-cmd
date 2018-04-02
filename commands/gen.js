@@ -49,7 +49,7 @@ function whatAreYouTalking(str) {
     },
     getBy: {
       patten: /get_(\w+)_by_(\w+)/,
-      handler: null,
+      handler: getBy,
     }
   };
 
@@ -62,12 +62,61 @@ function whatAreYouTalking(str) {
   }
 }
 /**
- * frig gen route get_**_by_**
+ * frog gen route get_**_by_**
  * 根据具体的字段查询数据，
  * 如果字段是唯一索引，返回单个
  * 如果普通索引，返回列表
  * 不是索引，不能生成
  */
+function getBy(p) {
+
+  let modelPath = `${process.cwd()}/models/${p[1]}.js`;
+  if (!fs.existsSync(modelPath)) {
+    throw new Error(`Model Not Exists: ${modelPath}`);
+    return;
+  }
+  let model = require(modelPath);
+  // console.log(model); process.exit(0);
+  let id = model.name;
+  let Id = PY.camel(model.name, true);
+  let by = PY.camel(p[2]);
+  
+  let tpl = `
+'use strict';
+//根据${by} 获取${Id}
+const ${Id}Model = require('../definitions/models/${Id}.gen.js');
+
+const Query = {
+  ${((model, field) => {
+      let content = '';
+      content += `//${model.fieldSet[field].fieldComment} ${model.fieldSet[field].rules[0]}:0,100 in:query
+  ${field}: ${getDefaultValue(model.fieldSet[field])},`;
+      if (!(isUniq(model.fieldSetp[field]))) {
+        content += `
+  //页码 number:1,999 in:query
+  page: 1
+        `;
+      }
+      return content;
+    })(model, by)}
+};
+
+module.exports = async (Query) => {
+  ${((model, field) => {
+      let content = '';
+      
+      if (isUniq(model.fieldSet[field])) {
+        content += `let row = await ${Id}Model.fetchBy${PY.camel(by, true)}(Query.${by});`;
+      } else {
+
+      }
+      return content;
+    })(model, by)}
+};
+  `;
+  console.log(tpl); process.exit(0);
+  fs.writeFileSync(`${process.cwd()}/handlers/${by}.js`, tpl);
+}
 
 /**
  * frog gen route get_**_list
@@ -101,7 +150,7 @@ const Query = {
         if (!(f.isPrimary || f.uniqIndexName !== '' || f.indexName !== '')) {
           continue;
         }
-        content += `// ${f.fieldComment.replace(/\s/g, '_')} []${f.rules[0]}:0,100:0 in:query
+        content += `// ${f.fieldComment.replace(/\s/g, '_')} []${f.rules[0]}:0,100:0,100 in:query
   ${k}:${getDefaultValue(f)},
   `;
       }
@@ -176,4 +225,7 @@ function getDefaultValue(fieldDefinition) {
   }
 }
 
+function isUniq(fieldDefinition) {
+  return (fieldDefinition.isPrimary || fieldDefinition.uniqIndexName !== '');
+}
 module.exports = gen

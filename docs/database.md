@@ -24,14 +24,15 @@
 	  name: Field.name("user_name").varchar(64).allowNull().default("foo").uniq('u_a').comment("name of user"),
 	  age: Field.name("user_age").tinyint().default(10).comment('ages').index(),
 	  ...Presets.opTime,
-});
-```
-	其中
+	});
+
+	```
+其中
 	
 	```
 	...Presets.opTime,
 	```
-	等价于
+等价于
 	
 	```
 	createTime: Field.name('create_time').bigint(true).index().comment('创建时间'),

@@ -19,6 +19,9 @@
 
 - [Easy Definition of Error Type ____更简单的定义/管理错误](./docs/easy-definition-of-error-type.md)
 
-
-
+- 扩展阅读
+	
+	- [关于抽象语法树的应用]() TODO
+	- [jsoc--自动文档与自动客户端的根基]() TODO
+	- [探究自动测试用例的可行性]() TODO
  

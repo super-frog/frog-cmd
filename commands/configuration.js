@@ -8,7 +8,7 @@ const readline = require('readline-sync');
 const colors = require('colors');
 const fs = require('fs');
 const child_process = require('child_process');
-const HOME = process.env['HOME'];
+const HOME = process.env['HOME'] || '/tmp';
 
 let configuration = {};
 

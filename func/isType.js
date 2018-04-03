@@ -1,7 +1,7 @@
 'use strict';
 
 let isType = (type, val, length) => {
-  type = (type && typeof type == 'string') ? type.toLowerCase() : type;
+  type = (type && typeof type === 'string') ? type.toLowerCase() : type;
   if (length && ('' + val).length != length) {
     return false;
   }
@@ -22,13 +22,13 @@ let isType = (type, val, length) => {
       return /[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9]+/.test(val);
       break;
     case 'password':
-      return val == 123456;
+      return val === 123456;
       break;
     case 'null':
       return val === null;
       break;
     case 'object':
-      return typeof val == 'object' && !Array.isArray(val);
+      return typeof val === 'object' && !Array.isArray(val);
     case 'array':
       return Array.isArray(val);
       break;

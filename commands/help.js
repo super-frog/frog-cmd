@@ -6,17 +6,17 @@
 const xiaolanAst = require('xiaolan-ast');
 const path = require('path');
 const colors = require('colors');
-const EOL = require('os').EOL;
+const { EOL } = require('os');
 
-module.exports = (argv)=>{
-  let entrance = path.resolve(__dirname+'/../frog.js');
+module.exports = (argv) => {
+  let entrance = path.resolve(__dirname + '/../frog.js');
   let helpers = xiaolanAst.genHelper(entrance);
-  if(argv._[0]){
+  if (argv._[0]) {
     helpers = {
       [argv._[0]]: helpers[argv._[0]]
     }
   }
-  for(let k in helpers){
+  for (let k in helpers) {
     let help = helpers[k];
     printHelper(help);
   }

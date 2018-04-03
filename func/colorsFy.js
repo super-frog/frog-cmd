@@ -4,17 +4,17 @@
 
 'use strict';
 const colors = require('colors');
-const EOL = require('os').EOL;
+const { EOL } = require('os');
 
 let colorsFy = (obj, tab = 1) => {
   let len = Object.keys(obj).length;
   let result = '{';
   for (let i in obj) {
     result += EOL + '    '.repeat(tab) + i + ' : ';
-    if (typeof obj[i] == 'object') {
+    if (typeof obj[i] === 'object') {
       result += colorsFy(obj[i], tab + 1);
     } else {
-      if (obj[i] == true) {
+      if (obj[i] === true) {
         result += 'true'.green;
       } else {
         result += 'false'.red;

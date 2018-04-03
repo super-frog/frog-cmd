@@ -4,7 +4,7 @@
 
 const yargs = require('yargs');
 const colors = require('colors');
-const EOL = require('os').EOL;
+const { EOL } = require('os');
 
 const configuration = require('./commands/configuration');
 const project = require('./commands/project');

@@ -7,26 +7,26 @@
 
 const fs = require("fs");
 const colors = require('colors');
-const {EOL} = require('os');
+const { EOL } = require('os');
 
 let optimization = {};
 
-optimization.detail = (moduleName)=>{
-  let deps = require(process.cwd()+'/package.json').dependencies || {};
-  if(deps[moduleName]===undefined){
-    console.log('You had NOT used : '+moduleName);
+optimization.detail = (moduleName) => {
+  let deps = require(process.cwd() + '/package.json').dependencies || {};
+  if (deps[moduleName] === undefined) {
+    console.log('You had NOT used : ' + moduleName);
     process.exit(0);
   }
   let requires = getAllRequire(process.cwd());
   console.log(`${moduleName} used detail:${EOL}`.yellow);
-  for(let k in requires[moduleName]){
+  for (let k in requires[moduleName]) {
     console.log(requires[moduleName][k].green);
   }
 };
 
 optimization.dependence = () => {
 
-  let deps = require(process.cwd()+'/package.json').dependencies || {};
+  let deps = require(process.cwd() + '/package.json').dependencies || {};
   for (let k in deps) {
     deps[k] = 0;
   }
@@ -40,7 +40,7 @@ optimization.dependence = () => {
   }
   console.log(('module' + ' '.repeat(32)).substr(0, 32).yellow + 'used'.yellow);
   for (let k in deps) {
-    let display = deps[k] == 0 ? deps[k].toString().red + '(never used)'.gray : deps[k].toString().cyan;
+    let display = deps[k] === 0 ? deps[k].toString().red + '(never used)'.gray : deps[k].toString().cyan;
     console.log((k + ' '.repeat(32)).substr(0, 32) + display);
   }
 };
@@ -51,11 +51,11 @@ const getAllRequire = (path) => {
   if (fs.statSync(path).isDirectory() && !(path.endsWith('node_modules'))) {
     fs.readdirSync(path).map((x) => {
       let next = getAllRequire(path + '/' + x);
-      for(let k in next){
+      for (let k in next) {
         result[k] = result[k] || [];
         result[k] = result[k].concat(next[k]);
       }
-      
+
     });
 
   } else if (path.endsWith('.js')) {
@@ -68,14 +68,14 @@ const getAllRequire = (path) => {
       result[m].push(path);
     }
     let matchesImport = content.match(/import[\s+](.*?)[\s+]from[\s+](.*)/g);
-    for(let k in matchesImport){
+    for (let k in matchesImport) {
       let find = matchesImport[k].match(/from[\s+]['|"](.*?)['|"]/);
-      if(find){
+      if (find) {
         let m = find[1];
         result[m] = result[m] || [];
         result[m].push(path);
       }
-      
+
     }
   }
   return result;

@@ -17,8 +17,7 @@ const counting = require('../lib/line-counting');
 
 let project = {};
 
-project.create = async (argv) => {
-  let name = argv._[2];
+project.create = async (name) => {
   console.log('Create project ...'.yellow + EOL);
   let filePath = path.resolve(name);
   if (!fs.existsSync(filePath)) {
@@ -35,7 +34,6 @@ project.create = async (argv) => {
     packageJson.scripts['touch'] = `frog touch && exit 0`;
     fs.writeFileSync(`./package.json`, JSON.stringify(packageJson, null, 2));
     console.log('Done !'.green);
-    project.init(argv);
   });
 
 };

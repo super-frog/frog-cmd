@@ -6,6 +6,10 @@
 
 	npm install -g frog-cmd
 
+### Getting Start
+
+[快速开始指南](./docs/getting-start.md)
+
 ###  Overview
 
 ![](http://bluestest.oss-cn-shanghai.aliyuncs.com/frog.png)

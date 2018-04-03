@@ -40,7 +40,6 @@ project.create = async (argv) => {
 
 };
 
-
 project.build = async () => {
   let projectRoot = process.cwd();
   if (!fs.existsSync(`${projectRoot}/xiaolan.locked`)) {
@@ -130,7 +129,6 @@ project.build = async () => {
   console.log(`总代码行数: ${allLines.toString().blue}, 自动生成: ${(allLines - customerLines).toString().blue}, ${EOL}为你节省了: ${(Number.parseInt(100 * (allLines - customerLines) / allLines) + '%').green} 工作量!`); process.exit(0);
 };
 
-
 project.touch = async () => {
   let packageJson = require(`${process.cwd()}/package.json`);
   console.log(`${EOL}Current version is ${packageJson.version.yellow}${EOL}`);
@@ -195,4 +193,5 @@ function clearGen(path) {
 function forceDelete(path) {
   shell.exec(`rm -fr ${path}`);
 }
+
 module.exports = project;

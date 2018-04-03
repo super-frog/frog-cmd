@@ -36,10 +36,10 @@ let isType = (type, val, length) => {
       return val === true || val === false;
       break;
     case 'url':
-      return (typeof val ==='string')
+      return (typeof val === 'string')
         && (val.startsWith('http://') || val.startsWith('https://') || val.startsWith('//'));
       break;
-    default :
+    default:
       break;
   }
 };

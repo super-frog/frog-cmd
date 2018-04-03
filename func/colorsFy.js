@@ -6,8 +6,7 @@
 const colors = require('colors');
 const EOL = require('os').EOL;
 
-let colorsFy = (obj, tab) => {
-  tab = tab || 1;
+let colorsFy = (obj, tab = 1) => {
   let len = Object.keys(obj).length;
   let result = '{';
   for (let i in obj) {
@@ -15,9 +14,9 @@ let colorsFy = (obj, tab) => {
     if (typeof obj[i] == 'object') {
       result += colorsFy(obj[i], tab + 1);
     } else {
-      if(obj[i] == true){
+      if (obj[i] == true) {
         result += 'true'.green;
-      }else{
+      } else {
         result += 'false'.red;
         console.error('');
       }

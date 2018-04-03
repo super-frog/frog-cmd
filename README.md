@@ -2,6 +2,10 @@
 ### Frog - build your application fast and save your time +1s
 ![](http://bluestest.oss-cn-shanghai.aliyuncs.com/u=2760800048,436059731&fm=26&gp=0.jpg)
 
+### Install
+
+	npm install -g frog-cmd
+
 ###  Overview
 
 ![](http://bluestest.oss-cn-shanghai.aliyuncs.com/frog.png)

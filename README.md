@@ -10,13 +10,14 @@
 
 [快速开始指南](./docs/getting-start.md)
 
+**[贡献者指南](./docs/contributor-guide.md)**
+
 ###  Overview
 
 ![](http://bluestest.oss-cn-shanghai.aliyuncs.com/frog.png)
 
 - [Database ____数据模型](./docs/database.md)
 	
-
 - [Protocol-less Handler ____对调用协议无感知的业务逻辑](./docs/protocol-less-handler.md)
 
 - [Incoming Validation ____输入校验](./docs/incoming-validation.md)

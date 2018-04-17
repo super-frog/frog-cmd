@@ -21,13 +21,13 @@
   "homepage": "https://github.com/super-frog/frog-command#readme",
   "dependencies": {
     "colors": "^1.1.2",
-    "dotenvr": "^0.1.12",
+    "dotenvr": "^0.1.14",
     "ini": "^1.3.5",
     "path": "^0.12.7",
     "readline-sync": "^1.4.7",
     "request-agent": "^1.0.3",
     "shelljs": "^0.7.8",
-    "xiaolan-ast": "^1.3.65",
+    "xiaolan-ast": "^1.3.66",
     "xiaolan-db": "^1.2.16",
     "yargs": "^8.0.2"
   }

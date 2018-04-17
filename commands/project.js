@@ -25,13 +25,14 @@ project.create = async (name) => {
   }
   process.chdir(name);
   console.log('Waiting ...'.yellow + EOL);
-  shell.exec(`npm init --yes && npm i xiaolan -S --registry=https://registry.npm.taobao.org && ./node_modules/.bin/xiaolan`, { silent: true, async: false }, () => {
+  shell.exec(`npm init --yes && npm i xiaolan -S --registry=https://registry.npm.taobao.org && ./node_modules/.bin/xiaolan && npm i mocha -D`, { silent: true, async: false }, () => {
     console.log(`Init : ${path.resolve('./package.json')}${EOL}`);
     let packageJson = require(path.resolve('./package.json'));
     packageJson.scripts = {};
     packageJson.scripts['build'] = `frog build && exit 0`;
     packageJson.scripts['dev'] = `frog build && node server.js`;
     packageJson.scripts['touch'] = `frog touch && exit 0`;
+    packageJson.scripts['test'] = `npx mocha testing/test.js`;
     fs.writeFileSync(`./package.json`, JSON.stringify(packageJson, null, 2));
     console.log('Done !'.green);
   });

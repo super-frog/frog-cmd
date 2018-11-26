@@ -1,8 +1,4 @@
-/**
- * Created by lanhao on 2017/9/16.
- */
 
-'use strict';
 const fs = require('fs');
 const path = require('path');
 const xiaolanast = require('xiaolan-ast');
@@ -14,6 +10,7 @@ const dotenvr = require('dotenvr');
 const xiaolanDB = require('xiaolan-db');
 const func = require('../lib/func');
 const counting = require('../lib/line-counting');
+const filehash = require('../lib/util/file_hash');
 
 let project = {};
 
@@ -41,9 +38,19 @@ project.create = async (name) => {
 
 project.build = async () => {
   let projectRoot = process.cwd();
+
   if (!fs.existsSync(`${projectRoot}/xiaolan.locked`)) {
     console.log(`This is not created by Frog `.red); process.exit(0);
   }
+
+  let buildCtrl = {}
+  //生成build控制文件
+  if (!fs.existsSync(`${projectRoot}/.frog-build.json`)) {
+    fs.writeFileSync(`${projectRoot}/.frog-build.json`, JSON.stringify({}, null, 2))
+  } else {
+    buildCtrl = require(`${projectRoot}/.frog-build.json`)
+  }
+
   console.log('step 0: Init'.yellow);
   await func.sleep(200);
 
@@ -59,6 +66,7 @@ project.build = async () => {
   if (!fs.existsSync(`${projectRoot}/definitions/models`)) {
     fs.mkdirSync(`${projectRoot}/definitions/models`);
   }
+  console.log('done !'.green + EOL);
 
   console.log('step 1: start gen Request Object:'.yellow);
   await func.sleep(300);
@@ -67,14 +75,20 @@ project.build = async () => {
     process.exit(0);
   }
   let handlers = xiaolanast.findHandler(`${projectRoot}/routes.js`);
-  forceDelete(`${projectRoot}/definitions/handlers/*`);
   for (let k in handlers) {
-    if (!fs.existsSync(`${projectRoot}/handlers/${handlers[k]}.js`)) {
+    const handlerPath = `${projectRoot}/handlers/${handlers[k]}.js`
+    if (!fs.existsSync(handlerPath)) {
       console.log(`can not found handler [${handlers[k]}]`.red);
       process.exit(0);
     }
+    const handlerHash = filehash(handlerPath);
+    if (buildCtrl[handlerPath] === handlerHash) {
+      // hash 相同 不处理
+      continue;
+    }
     clearGen(`${projectRoot}/definitions/handlers/${handlers[k]}/`);
     xiaolanast.genClass(`${projectRoot}/handlers/${handlers[k]}.js`, `${projectRoot}/definitions/handlers/${handlers[k]}/`);
+    buildCtrl[handlerPath] = handlerHash;
   }
   console.log('done !'.green + EOL);
 
@@ -84,12 +98,19 @@ project.build = async () => {
   if (!fs.existsSync(`${projectRoot}/errors`)) {
     fs.mkdirSync(`${projectRoot}/errors`);
   }
-  if (!fs.existsSync(`${projectRoot}/errors/Error.js`)) {
+  const errorPath = `${projectRoot}/errors/Error.js`;
+
+  if (!fs.existsSync(errorPath)) {
     console.log(`Can not found Error file in "${projectRoot}/errors/"`.red);
     process.exit(0);
   }
-
-  xiaolanast.genError(`${projectRoot}/errors/Error.js`, `${projectRoot}/definitions/errors`);
+  const errorHash = filehash(errorPath);
+  if (buildCtrl[errorPath] === errorHash) {
+    // nothing
+  } else {
+    xiaolanast.genError(`${projectRoot}/errors/Error.js`, `${projectRoot}/definitions/errors`);
+    buildCtrl[errorPath] = errorHash
+  }
   console.log('done !'.green + EOL);
 
   console.log('step 3: Database Migrate:'.yellow);
@@ -97,34 +118,36 @@ project.build = async () => {
   let localENV = projectRoot + '/.env';
   process.env = Object.assign(process.env, dotenvr.load(localENV));
 
-
   let migrate = null;
   let models = fs.readdirSync(`${projectRoot}/models`);
   if (models.length > 0) {
     migrate = new xiaolanDB.Migrate();
   }
-  forceDelete(`${projectRoot}/definitions/models/*`);
+
   for (let k in models) {
-    if (models[k].endsWith('.gen.js')) {
+    const modelPath = `${projectRoot}/models/${models[k]}`
+    const modelHash = filehash(modelPath)
+    if (buildCtrl[modelPath] === modelHash) {
       continue;
     }
-    let table = require(`${projectRoot}/models/${models[k]}`);
-
-    xiaolanast.genModel(`${projectRoot}/models/${models[k]}`, `${projectRoot}/definitions/models`).toFile();
+    let table = require(modelPath);
+    xiaolanast.genModel(modelPath, `${projectRoot}/definitions/models`).toFile();
     await migrate.execute(table);
+    buildCtrl[modelPath] = modelHash
   }
   console.log('done !'.green + EOL);
 
-  console.log('step 4: start gen jsoc.json :'.yellow);
-  await func.sleep(600);
-  xiaolanast.genJsoc(projectRoot);
-  console.log('done !'.green + EOL);
+  // console.log('step 4: start gen jsoc.json :'.yellow);
+  // await func.sleep(600);
+  // xiaolanast.genJsoc(projectRoot);
+  // console.log('done !'.green + EOL);
 
   //更新.env.example
   syncEnv();
 
   let allLines = counting(projectRoot);
   let customerLines = counting(projectRoot, ['definitions']);
+  fs.writeFileSync(`${projectRoot}/.frog-build.json`, JSON.stringify(buildCtrl, null, 2));
   console.log(`总代码行数: ${allLines.toString().blue}, 自动生成: ${(allLines - customerLines).toString().blue}, ${EOL}为你节省了: ${(Number.parseInt(100 * (allLines - customerLines) / allLines) + '%').green} 工作量!`); process.exit(0);
 };
 

@@ -63,7 +63,8 @@ switch (command) {
   // -a {xx} 指定接口
   // -i 打印请求信息
   case 'test':
-    jsoc.run();
+    console.log(`no support!`.gray)
+    //jsoc.run();
     break;
 
   // 重置frog frog reset

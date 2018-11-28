@@ -22,12 +22,13 @@ project.create = async (name) => {
   }
   process.chdir(name);
   console.log('Waiting ...'.yellow + EOL);
-  shell.exec(`npm init --yes && npm i xiaolan -S --registry=https://registry.npm.taobao.org && ./node_modules/.bin/xiaolan && npm i mocha -D`, { silent: true, async: false }, () => {
+  shell.exec(`npm init --yes && npm i xiaolan -S --registry=https://registry.npm.taobao.org && ./node_modules/.bin/xiaolan && npm i mocha -D && npm i nodemon -D && npm i npm-run-all -D `, { silent: true, async: false }, () => {
     console.log(`Init : ${path.resolve('./package.json')}${EOL}`);
     let packageJson = require(path.resolve('./package.json'));
     packageJson.scripts = {};
-    packageJson.scripts['build'] = `frog build && exit 0`;
-    packageJson.scripts['dev'] = `frog build && node server.js`;
+    packageJson.scripts['build'] = `nodemon --watch handlers --watch models --watch errors --exec \"frog build\"`;
+    packageJson.scripts['_dev'] = `nodemon --delay 2000ms --watch definitions --watch handlers --watch models --watch errors node server.js`;
+    packageJson.scripts['dev'] = `npx npm-run-all -p build _dev`;
     packageJson.scripts['touch'] = `frog touch && exit 0`;
     packageJson.scripts['test'] = `npx mocha testing/test.js`;
     fs.writeFileSync(`./package.json`, JSON.stringify(packageJson, null, 2));
@@ -109,7 +110,7 @@ project.build = async () => {
     // nothing
   } else {
     xiaolanast.genError(`${projectRoot}/errors/Error.js`, `${projectRoot}/definitions/errors`);
-    buildCtrl[errorPath] = errorHash
+    buildCtrl[errorPath] = errorHash;
   }
   console.log('done !'.green + EOL);
 
@@ -125,15 +126,15 @@ project.build = async () => {
   }
 
   for (let k in models) {
-    const modelPath = `${projectRoot}/models/${models[k]}`
-    const modelHash = filehash(modelPath)
+    const modelPath = `${projectRoot}/models/${models[k]}`;
+    const modelHash = filehash(modelPath);
     if (buildCtrl[modelPath] === modelHash) {
       continue;
     }
     let table = require(modelPath);
     xiaolanast.genModel(modelPath, `${projectRoot}/definitions/models`).toFile();
     await migrate.execute(table);
-    buildCtrl[modelPath] = modelHash
+    buildCtrl[modelPath] = modelHash;
   }
   console.log('done !'.green + EOL);
 

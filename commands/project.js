@@ -138,10 +138,10 @@ project.build = async () => {
   }
   console.log('done !'.green + EOL);
 
-  // console.log('step 4: start gen jsoc.json :'.yellow);
-  // await func.sleep(600);
-  // xiaolanast.genJsoc(projectRoot);
-  // console.log('done !'.green + EOL);
+  console.log('step 4: start gen jsoc.json :'.yellow);
+  await func.sleep(600);
+  xiaolanast.genJsoc(projectRoot);
+  console.log('done !'.green + EOL);
 
   //更新.env.example
   syncEnv();

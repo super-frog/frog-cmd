@@ -29,8 +29,11 @@
     "request-agent": "^1.0.3",
     "shelljs": "^0.7.8",
     "user": "0.0.0",
-    "xiaolan-ast": "^1.3.66",
+    "xiaolan-ast": "^1.3.70",
     "xiaolan-db": "^1.2.16",
     "yargs": "^8.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0"
   }
 }

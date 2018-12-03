@@ -22,16 +22,16 @@ project.create = async (name) => {
   }
   process.chdir(name);
   console.log('Waiting ...'.yellow + EOL);
-  shell.exec(`npm init --yes && npm i xiaolan -S --registry=https://registry.npm.taobao.org && ./node_modules/.bin/xiaolan && npm i mocha -D && npm i nodemon -D && npm i npm-run-all -D `, { silent: true, async: false }, () => {
+  shell.exec('npm init --yes && npm i xiaolan -S --registry=https://registry.npm.taobao.org && ./node_modules/.bin/xiaolan && npm i mocha -D && npm i nodemon -D && npm i npm-run-all -D ', { silent: true, async: false }, () => {
     console.log(`Init : ${path.resolve('./package.json')}${EOL}`);
     let packageJson = require(path.resolve('./package.json'));
     packageJson.scripts = {};
-    packageJson.scripts['build'] = `nodemon --watch handlers --watch models --watch errors --exec \"frog build\"`;
-    packageJson.scripts['_dev'] = `nodemon --delay 2000ms --watch definitions --watch handlers --watch models --watch errors node server.js`;
-    packageJson.scripts['dev'] = `npx npm-run-all -p build _dev`;
-    packageJson.scripts['touch'] = `frog touch && exit 0`;
-    packageJson.scripts['test'] = `npx mocha testing/test.js`;
-    fs.writeFileSync(`./package.json`, JSON.stringify(packageJson, null, 2));
+    packageJson.scripts['build'] = 'nodemon --watch handlers --watch models --watch errors --exec \"frog build\"';
+    packageJson.scripts['_dev'] = 'nodemon --delay 2000ms --watch definitions --watch handlers --watch models --watch errors node server.js';
+    packageJson.scripts['dev'] = 'npx npm-run-all -p build _dev';
+    packageJson.scripts['touch'] = 'frog touch && exit 0';
+    packageJson.scripts['test'] = 'npx mocha testing/test.js';
+    fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
     console.log('Done !'.green);
   });
 
@@ -41,15 +41,15 @@ project.build = async () => {
   let projectRoot = process.cwd();
 
   if (!fs.existsSync(`${projectRoot}/xiaolan.locked`)) {
-    console.log(`This is not created by Frog `.red); process.exit(0);
+    console.log('This is not created by Frog '.red); process.exit(0);
   }
 
-  let buildCtrl = {}
+  let buildCtrl = {};
   //生成build控制文件
   if (!fs.existsSync(`${projectRoot}/.frog-build.json`)) {
-    fs.writeFileSync(`${projectRoot}/.frog-build.json`, JSON.stringify({}, null, 2))
+    fs.writeFileSync(`${projectRoot}/.frog-build.json`, JSON.stringify({}, null, 2));
   } else {
-    buildCtrl = require(`${projectRoot}/.frog-build.json`)
+    buildCtrl = require(`${projectRoot}/.frog-build.json`);
   }
 
   console.log('step 0: Init'.yellow);
@@ -77,7 +77,7 @@ project.build = async () => {
   }
   let handlers = xiaolanast.findHandler(`${projectRoot}/routes.js`);
   for (let k in handlers) {
-    const handlerPath = `${projectRoot}/handlers/${handlers[k]}.js`
+    const handlerPath = `${projectRoot}/handlers/${handlers[k]}.js`;
     if (!fs.existsSync(handlerPath)) {
       console.log(`can not found handler [${handlers[k]}]`.red);
       process.exit(0);

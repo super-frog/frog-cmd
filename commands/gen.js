@@ -1,4 +1,3 @@
-'use strict'
 const fs = require('fs');
 const PY = require('../lib/util/pinyin');
 const { EOL } = require('os');
@@ -6,26 +5,25 @@ const { EOL } = require('os');
 const gen = async (argv) => {
   let [, subCmomand, name, ...others] = argv._;
   switch (subCmomand) {
-    case 'model':
-      genModel(name);
-      break;
-    case 'route':
-      whatAreYouTalking(name);
-      break;
-    default:
-      console.log(`${EOL}Usage: frog gen {model|route} xxx${EOL}`); process.exit(0);
-      break;
+  case 'model':
+    genModel(name);
+    break;
+  case 'route':
+    whatAreYouTalking(name);
+    break;
+  default:
+    console.log(`${EOL}Usage: frog gen {model|route} xxx${EOL}`); process.exit(0);
+    break;
   }
-}
+};
 
 const genRoute = (command) => {
 
-}
+};
 
 const genModel = (name) => {
   if (!name) {
     throw new Error('Usage: frog gen model {xxxx}');
-    return;
   }
 
   let tpl = `
@@ -39,7 +37,7 @@ module.exports = new Table('${PY.underline(name)}', {
 });
   `;
   fs.writeFileSync(`${process.cwd()}/models/${PY.underline(name)}.js`, tpl);
-}
+};
 
 function whatAreYouTalking(str) {
   let E = {
@@ -73,7 +71,6 @@ function getBy(p) {
   let modelPath = `${process.cwd()}/models/${p[1]}.js`;
   if (!fs.existsSync(modelPath)) {
     throw new Error(`Model Not Exists: ${modelPath}`);
-    return;
   }
   let model = require(modelPath);
   // console.log(model); process.exit(0);
@@ -82,36 +79,33 @@ function getBy(p) {
   let by = PY.camel(p[2]);
   
   let tpl = `
-'use strict';
 //根据${by} 获取${Id}
 const ${Id}Model = require('../definitions/models/${Id}.gen.js');
 
 const Query = {
   ${((model, field) => {
-      let content = '';
-      content += `//${model.fieldSet[field].fieldComment} ${model.fieldSet[field].rules[0]}:0,100 in:query
+    let content = '';
+    content += `//${model.fieldSet[field].fieldComment} ${model.fieldSet[field].rules[0]}:0,100 in:query
   ${field}: ${getDefaultValue(model.fieldSet[field])},`;
-      if (!(isUniq(model.fieldSetp[field]))) {
-        content += `
+    if (!(isUniq(model.fieldSetp[field]))) {
+      content += `
   //页码 number:1,999 in:query
   page: 1
         `;
-      }
-      return content;
-    })(model, by)}
+    }
+    return content;
+  })(model, by)}
 };
 
 module.exports = async (Query) => {
   ${((model, field) => {
-      let content = '';
+    let content = '';
       
-      if (isUniq(model.fieldSet[field])) {
-        content += `let row = await ${Id}Model.fetchBy${PY.camel(by, true)}(Query.${by});`;
-      } else {
-
-      }
-      return content;
-    })(model, by)}
+    if (isUniq(model.fieldSet[field])) {
+      content += `let row = await ${Id}Model.fetchBy${PY.camel(by, true)}(Query.${by});`;
+    }
+    return content;
+  })(model, by)}
 };
   `;
   console.log(tpl); process.exit(0);
@@ -128,36 +122,34 @@ function getList(p) {
   let modelPath = `${process.cwd()}/models/${p[1]}.js`;
   if (!fs.existsSync(modelPath)) {
     throw new Error(`Model Not Exists: ${modelPath}`);
-    return;
   }
   let model = require(modelPath);
   // console.log(model); process.exit(0);
   let id = model.name;
   let Id = PY.camel(model.name, true);
   let tpl = `
-'use strict';
 //获取${Id}列表
 const ${Id}Model = require('../definitions/models/${Id}.gen.js');
 
 const Query = {
   ${((model) => {
-      let content = '';
-      for (let k in model.fieldSet) {
-        let f = model.fieldSet[k];
-        if (k === 'createTime' || k === 'updateTime') {
-          continue;
-        }
-        if (!(f.isPrimary || f.uniqIndexName !== '' || f.indexName !== '')) {
-          continue;
-        }
-        content += `// ${f.fieldComment.replace(/\s/g, '_')} []${f.rules[0]}:0,100:0,100 in:query
+    let content = '';
+    for (let k in model.fieldSet) {
+      let f = model.fieldSet[k];
+      if (k === 'createTime' || k === 'updateTime') {
+        continue;
+      }
+      if (!(f.isPrimary || f.uniqIndexName !== '' || f.indexName !== '')) {
+        continue;
+      }
+      content += `// ${f.fieldComment.replace(/\s/g, '_')} []${f.rules[0]}:0,100:0,100 in:query
   ${k}:${getDefaultValue(f)},
   `;
-      }
-      content += `//页码 number:1,999 in:query
+    }
+    content += `//页码 number:1,999 in:query
   page: 1`;
-      return content;
-    })(model)}
+    return content;
+  })(model)}
 };
 
 module.exports = async (Query) => {
@@ -165,23 +157,23 @@ module.exports = async (Query) => {
 
   let sql = 'select * from \`${id}\` where 1 ';
    ${((model) => {
-      let content = '';
-      for (let k in model.fieldSet) {
-        let f = model.fieldSet[k];
-        if (k === 'createTime' || k === 'updateTime') {
-          continue;
-        }
-        if (!(f.isPrimary || f.uniqIndexName !== '' || f.indexName !== '')) {
-          continue;
-        }
-        content += `
+    let content = '';
+    for (let k in model.fieldSet) {
+      let f = model.fieldSet[k];
+      if (k === 'createTime' || k === 'updateTime') {
+        continue;
+      }
+      if (!(f.isPrimary || f.uniqIndexName !== '' || f.indexName !== '')) {
+        continue;
+      }
+      content += `
   if (Query.${k}.length){
     sql += 'and \`${f.fieldName}\` in ('+JSON.stringify(Query.${k})+') ';
   }
 `;
-      }
-      return content;
-    })(model)}
+    }
+    return content;
+  })(model)}
 
   sql += 'order by id desc limit ' + (Query.page - 1) * PAGE_SIZE + ',' + PAGE_SIZE;
   let count = await ${Id}Model.raw(sql.replace('*', 'count(*) c'), {}, false);
@@ -206,26 +198,21 @@ module.exports = async (Query) => {
 function getDefaultValue(fieldDefinition) {
   let type = fieldDefinition.rules[0];
   switch (type) {
-    case 'string':
-      return `'${fieldDefinition.defaultValue || ''}'`;
-      break;
-    case 'enum':
-    case 'number':
-      return `${fieldDefinition.defaultValue || 0}`;
-      break;
-    case 'array':
-      return `['${fieldDefinition.defaultValue.join('\',\'')}']`;
-      break;
-    case 'ref':
-      return `new ${fieldDefinition.type.ref.name}({})`;
-      break;
-    default:
-      return `''`;
-      break;
+  case 'string':
+    return `'${fieldDefinition.defaultValue || ''}'`;
+  case 'enum':
+  case 'number':
+    return `${fieldDefinition.defaultValue || 0}`;
+  case 'array':
+    return `['${fieldDefinition.defaultValue.join('\',\'')}']`;
+  case 'ref':
+    return `new ${fieldDefinition.type.ref.name}({})`;
+  default:
+    return '\'\'';
   }
 }
 
 function isUniq(fieldDefinition) {
   return (fieldDefinition.isPrimary || fieldDefinition.uniqIndexName !== '');
 }
-module.exports = gen
+module.exports = gen;

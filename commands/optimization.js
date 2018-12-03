@@ -5,7 +5,7 @@
 
 'use strict';
 
-const fs = require("fs");
+const fs = require('fs');
 const colors = require('colors');
 const { EOL } = require('os');
 

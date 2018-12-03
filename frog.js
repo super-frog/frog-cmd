@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-"use strict";
+'use strict';
 
 const yargs = require('yargs');
 const colors = require('colors');
@@ -30,73 +30,72 @@ if (argv.help === true) {
 
 switch (command) {
 
-  // 创建项目 frog create {projectName}
-  case 'create':
-    let projectName = subCommand;
-    project.create(projectName);
-    break;
+// 创建项目 frog create {projectName}
+case 'create':
+  project.create(subCommand);
+  break;
   // 生成代码 frog gen model {modelName}
   //frog gen route {xxx}
-  case 'gen':
-    gen(argv).then((v) => {
-      process.exit(0);
-    }).catch((e) => {
-      console.log(e.message.red);
-      process.exit(-1);
-    });
-    break;
+case 'gen':
+  gen(argv).then((v) => {
+    process.exit(0);
+  }).catch((e) => {
+    console.log(e.message.red);
+    process.exit(-1);
+  });
+  break;
   // 编译项目 frog build
-  case 'build':
-    project.build().then((v) => {
-      console.log('Build Finish.'.green);
-      process.exit(0);
-    }).catch((e) => {
-      console.log(e);
-      process.exit(-1);
-    });
-    break;
+case 'build':
+  project.build().then((v) => {
+    console.log('Build Finish.'.green);
+    process.exit(0);
+  }).catch((e) => {
+    console.log(e);
+    process.exit(-1);
+  });
+  break;
   // 更新项目版本 frog touch
-  case 'touch':
-    project.touch();
-    break;
+case 'touch':
+  project.touch();
+  break;
   // 自动测试 frog test [option]
   // -a {xx} 指定接口
   // -i 打印请求信息
-  case 'test':
-    console.log(`no support!`.gray)
-    //jsoc.run();
-    break;
+case 'test':
+  console.log('no support!'.gray);
+  //jsoc.run();
+  break;
 
   // 重置frog frog reset
-  case 'reset':
-    configuration.reset();
-    break;
+case 'reset':
+  configuration.reset();
+  break;
   // 配置frog frog config
-  case 'config':
-    configuration.init();
-    break;
+case 'config':
+  configuration.init();
+  break;
   // 初始化项目的frog.json frog init
-  case 'init':
-    if (configuration.ready()) {
-      require('./commands/init')();
-    } else {
-      configuration.init();
-    }
-    break;
+case 'init':
+  if (configuration.ready()) {
+    require('./commands/init')();
+  } else {
+    configuration.init();
+  }
+  break;
 
   // 项目优化检查 frog opt
-  case 'opt':
-    if (subCommand === undefined) {
-      require('./commands/optimization').dependence();
-    } else {
-      require('./commands/optimization').detail(subCommand);
-    }
-    break;
+case 'opt':
+  if (subCommand === undefined) {
+    require('./commands/optimization').dependence();
+  } else {
+    require('./commands/optimization').detail(subCommand);
+  }
+  break;
   // 自动生成服务的client frog client {projectName}
-  case 'client':
-    require('./commands/client').genClient(subCommand);
-    break;
-  default:
-    console.log(`${EOL}Don't always dying to make a big news!${EOL}`.red);
-    break;
+case 'client':
+  require('./commands/client').genClient(subCommand);
+  break;
+default:
+  console.log(`${EOL}Don't always dying to make a big news!${EOL}`.red);
+  break;
 }

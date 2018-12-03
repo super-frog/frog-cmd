@@ -1,8 +1,4 @@
-/**
- * Created by lanhao on 16/8/3.
- */
 
-'use strict';
 const { EOL } = require('os');
 const makeData = require('./makeData.js');
 const path = require('path');
@@ -67,8 +63,9 @@ let prettyJson2 = (obj, tabCount) => {
     let isArray = Array.isArray(obj);
     r += (isArray) ? '[' + EOL : '{' + EOL;
     let keys = Object.keys(obj);
-    let k;
-    while (k = keys.shift()) {
+    
+    while (keys.length>1) {
+      let k = keys.shift();
       if (isArray) {
         r += tab.repeat(tabCount + 1) + prettyJson2(obj[k], tabCount);
       } else {

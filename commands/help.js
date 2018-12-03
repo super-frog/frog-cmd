@@ -14,7 +14,7 @@ module.exports = (argv) => {
   if (argv._[0]) {
     helpers = {
       [argv._[0]]: helpers[argv._[0]]
-    }
+    };
   }
   for (let k in helpers) {
     let help = helpers[k];

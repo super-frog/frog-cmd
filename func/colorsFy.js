@@ -25,6 +25,6 @@ let colorsFy = (obj, tab = 1) => {
       result += ' , ';
   }
   return result + EOL + '    '.repeat(tab - 1) + '}';
-};;
+};
 
 module.exports = colorsFy;

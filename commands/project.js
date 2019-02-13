@@ -143,6 +143,11 @@ project.build = async () => {
   xiaolanast.genJsoc(projectRoot);
   console.log('done !'.green + EOL);
 
+  console.log('step 5: start gen swagger.json :'.yellow);
+  await func.sleep(300);
+  swagger(projectRoot);
+  console.log('done !'.green + EOL);
+
   //更新.env.example
   syncEnv();
 
@@ -165,6 +170,67 @@ project.touch = async () => {
     console.log('Cancel !'.yellow);
   }
 };
+
+function swagger(projectRoot) {
+  if (!fs.existsSync(`${projectRoot}/jsoc.json`)) {
+    return;
+  }
+  const jsoc = require(`${projectRoot}/jsoc.json`);
+  if (!fs.existsSync(`${projectRoot}/package.json`)) {
+    return;
+  }
+  const pkg = require(`${projectRoot}/package.json`);
+  const swaggerTpl = {
+    swagger: '2.0',
+    info: {
+      title: `${pkg.name}:${pkg.version}`,
+      description: pkg.description,
+      author: pkg.author,
+      license: pkg.license
+    },
+    host: '',
+    basePath: `/`,
+    schemes: ['http'],
+    paths: {},
+    definitions: {},
+    errors: jsoc.errors
+  };
+
+  for(const k in jsoc.apis) {
+    const api = jsoc.apis[k];
+    swaggerTpl.paths[api.request.path] = swaggerTpl.paths[api.request.path] || {};
+    swaggerTpl.paths[api.request.path][api.request.method] = swaggerTpl.paths[api.request.path][api.request.method] || {};
+    swaggerTpl.paths[api.request.path][api.request.method].produces = ['application/json'];
+    swaggerTpl.paths[api.request.path][api.request.method].consumes = ['application/json'];
+    swaggerTpl.paths[api.request.path][api.request.method].tags = [api.group];
+    swaggerTpl.paths[api.request.path][api.request.method].description = api.desc;
+    swaggerTpl.paths[api.request.path][api.request.method].summary = api.desc;
+    swaggerTpl.paths[api.request.path][api.request.method].parameters = [];
+    swaggerTpl.paths[api.request.path][api.request.method].operationId = api.name;
+    swaggerTpl.paths[api.request.path][api.request.method].responses = {
+      // todo reaponses
+    };
+    ['query', 'params', 'body', 'headers'].forEach(IN => {
+      for(let i in api.request[IN]){
+        const field = api.request[IN][i];
+        swaggerTpl.paths[api.request.path][api.request.method].parameters.push({
+          maximum: field._length&&field._length[1] || field._range&&field._range[1] || Number.MAX_SAFE_INTEGER,
+          minimum: field._length&&field._length[0] || field._range&&field._range[0] || 0,
+          enum: [],
+          type: field._type,
+          name: i,
+          description: field._desc,
+          in: IN,
+          default: field._default,
+          required: field._length&&field._length[0] || field._range&&field._range[0] || false
+        });
+      }
+    });
+  }
+
+  fs.writeFileSync(`${projectRoot}/swagger.json`, JSON.stringify(swaggerTpl, null, 2));
+  console.log(`File generated in : ${projectRoot}/swagger.json`);
+}
 
 function syncEnv() {
   if (!fs.existsSync(`${process.cwd()}/.env`)) {
@@ -216,5 +282,7 @@ function clearGen(path) {
 function forceDelete(path) {
   shell.exec(`rm -fr ${path}`);
 }
+
+
 
 module.exports = project;
